@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lord of the Rings Wiki - Media</title>
+        <link rel="stylesheet" href="../style.css" type="text/css">
+    </head>
+    <body>
+        <section class="pageHeader">
+            <p id="title">Lord of the Rings Wiki</p>
+            <ul id="navMenu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="locations.html">Locations</a></li>
+                <li><a href="races.html">Races</a></li>
+                <li><a href="weapons.html">Weapons</a></li>
+                <li><a href="media.html">Media</a></li>
+            </ul> 
+        </section>
+        <section class="pageContent">
+            <div class="pageTitle">
+                <h2>Media</h2>
+            </div>
+            <div id="filterSort">
+                <fieldset>
+                    <label>Sort Media by:<br>
+                        <select name="sortBy" id="sortBy">
+                            <option>--</option>
+                            <option>Title A-Z</option>
+                            <option>Title Z-A</option>
+                            <option>Type of Media</option>
+                        </select>
+                    </label>
+                    
+                    <input type="submit" value="Sort" id="submit"/>
+                    <br>
+                    <br>
+                    <label>Filter Media by:<br>
+                        <select name="filtering" id="filtering">
+                            <option>--</option>
+                            <option>Type of Media</option>
+                        </select>
+                        <p>(We will eventually dynamically populate list of properties to choose from based on above selection</p>
+                    </label>
+                    <input type="submit" value="Filter" id="submit"/>
+                </fieldset>
+            </div> 
+            <br>
+            <p>(Table data is currently hard-coded in, but will of course be auto-populated from database later)</p>
+            <br>
+            <br>
+            <div id="characterTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Media Title</th>
+                            <th colspan="2">Media Type</th>
+                            <th>Release Date</th>
+                            <th colspan="2">Modify</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+							<td>The Lord of the Rings: The Fellowship of the Ring</td>
+							<td></td>
+                            <td>Book</td>
+                            <td>29 July 1954</td>
+                            <td class="modButtons"><button type="button">Update</button></td>
+                            <td class="modButtons"><button type="button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>The Lord of the Rings: The Two Towers</td>
+                            <td></td>
+                            <td>Book</td>
+                            <td>11 November 1954</td>
+                            <td class="modButtons"><button type="button">Update</button></td>
+                            <td class="modButtons"><button type="button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>The Lord of the Rings: The Return of the King</td>
+                            <td></td>
+                            <td>Book</td>
+                            <td>20 October 1955</td>
+                            <td class="modButtons"><button type="button">Update</button></td>
+                            <td class="modButtons"><button type="button">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br><br>
+            <p>('Delete' button will allow you to remove a media item from the DB. 'Update' button will allow you to modify all info seen in above table</p>
+            <br><br>
+            <h3>Add Media:</h3>
+            <div class="addEntry">
+                <fieldset>
+                    <span style="font-size:12px">* = Required field</span><br><br>
+                    <label>Media Title*:
+                        <input type="text" name="name" id="name" size="35" maxlength="100" required="required">
+                    </label>
+                    <br><br>
+                    <label>Media Type*:
+                        <select name="sortBy" id="sortBy" required="required">
+                            <option>--</option>
+                            <option>Book</option>
+                            <option>Movie</option>
+                            <option>Dropdown will be filled dynamically</option>
+                        </select>
+                    </label>
+                    <br><br>
+                    <label>Release Date:
+                        <input type="text" name="name" id="name" size="35" maxlength="100">
+                    </label>
+                    <br><br>
+                    <input type="submit" value="Add Media" id="submit"/>
+                </fieldset>
+            </div>
+            <br><br>
+        </section>
+        <script src="../script.js"></script>
+    </body>
+</html>
