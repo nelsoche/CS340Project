@@ -16,11 +16,12 @@ body{
 #title{
     padding-top: 30px;
     width: 75%;
-    color: black;
+    color: white;
     text-emphasis: bold;
     font-family: arial;
     font-size: 90px;
     margin: 0 auto;
+    text-shadow: 2px 3px black;
 }
 
 
