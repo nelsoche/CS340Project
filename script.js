@@ -2,16 +2,6 @@ const openEls = document.querySelectorAll("[data-open]");
 const closeEls = document.querySelectorAll("[data-close]");
 const isVisible = "is-visible";
 
-var navContainer = document.getElementById("navMenu");
-var navItems = btnContainer.getElementsByClassName("btn");
-
-for (var i = 0; i < navItems.length; i++) {
-  navItems[i].addEventListener("click", function() {
-    var current = document.getElementsByClassName("active");
-    current[0].className = current[0].className.replace(" active", "");
-    this.className += " active";
-  });
-}
 
 for (const el of openEls) {
   el.addEventListener("click", function() {
@@ -38,3 +28,14 @@ document.addEventListener("keyup", e => {
     document.querySelector(".modal.is-visible").classList.remove(isVisible);
   }
 });
+
+var navContainer = document.getElementById("navMenu");
+var navItems = btnContainer.getElementsByClassName("btn");
+
+for (var i = 0; i < navItems.length; i++) {
+  navItems[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
