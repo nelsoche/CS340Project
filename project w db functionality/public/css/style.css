@@ -1,0 +1,240 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.pageHeader{
+    padding-top: 15px;
+    padding-bottom: 10px;
+    background-image: url('https://pbs.twimg.com/media/CMFG6npWwAAro3r.jpg');
+    /* background-repeat: no-repeat; */
+    width: 100%;
+    text-align: center;
+    height: 200px;
+}
+
+#title{
+    padding-top: 30px;
+    width: 75%;
+    color: white;
+    text-emphasis: bold;
+    font-family: arial;
+    font-size: 90px;
+    margin: 0 auto;
+    text-shadow: 2px 3px black;
+}
+
+
+#navMenu{
+    text-align: center;
+    list-style-type: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    background-color: black;
+}
+
+#navMenu li{
+    display: inline;
+}
+
+#navMenu li a{
+  float: center;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  padding-top: 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+#navMenu li a:hover {
+  background-color: rgb(219, 202, 45);
+  color: black;
+}
+
+.active {
+  background-color: rgb(6, 78, 6);
+  color: white;
+}
+
+a{
+    text-decoration: none;
+}
+
+.pageContent{
+    padding-top: 100px;
+    position: relative;
+    margin: 0 auto;
+    padding: 10px;
+    width: 90%;
+    font-family: arial;
+}
+
+h2{
+    font-family: arial;
+    font-size: 70px;
+    text-align: center;
+    margin: 0;
+}
+
+table{
+    border: solid 2px;
+    font-family: arial;
+    font-size: 30px;
+}
+
+td, th{
+    border: solid 1px;
+    padding: 10px;
+}
+
+fieldset{
+    padding: 15px;
+}
+
+.addEntry{
+    width: 200px;
+    font-family: arial;
+}
+
+.addTitle{
+    font-family: arial;
+    font-size: 25px;
+}
+
+button, .up{
+    cursor: pointer;
+    font-size: 25px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgb(7, 85, 18);
+    color: white;
+}
+
+.deleteMulti{
+	cursor: pointer;
+	font-size: 12px;
+	padding: 5px;
+	border-radius: 10px;
+	background-color: rgb(7, 85, 18);
+	color: white;
+}
+
+#submit{
+	cursor: pointer;
+	font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 10px;
+    background-color: rgb(7, 85, 18);
+    color: white;
+}
+
+.addEntry button{
+    font-size: 12px;
+    padding: 3px 6px;
+    background-color: white;
+    color: black;
+}
+
+.modButtons{
+    text-align: center;
+}
+
+
+/*Styling for modal*/
+:root {
+    --lightgray: #efefef;
+    --blue: steelblue;
+    --white: #fff;
+    --black: rgba(0, 0, 0, 0.8);
+    --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  }
+  
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  .btn-group {
+    text-align: left;
+  }
+  
+  .btn-group button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: inherit;
+  }
+  
+  .open-modal {
+    font-weight: bold;
+    color: rgb(7, 85, 18);
+    padding: 0;
+    border-radius: 5px;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--black);
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.35s ease-in;
+  }
+  
+  .modal.is-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .modal-dialog {
+    position: relative;
+    max-width: 800px;
+    max-height: 80vh;
+    border-radius: 5px;
+    background: var(--white);
+    overflow: auto;
+    cursor: default;
+  }
+  
+  .modal-dialog > * {
+    padding: 1rem;
+  }
+  
+  .modal-header,
+  .modal-footer {
+    background: var(--lightgray);
+  }
+  
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .modal-header .close-modal {
+    font-size: 1.5rem;
+  }
+  
+  .modal p + p {
+    margin-top: 1rem;
+  }
+
+  .modal-dialog table{
+      border: none;
+  }
+
+  .modal-dialog td{
+    border: none;
+    font-size: 20px;
+}
