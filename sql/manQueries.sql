@@ -81,6 +81,24 @@ INNER JOIN character_media ON characters.characterID = character_media.character
 INNER JOIN media ON media.mediaID = character_media.mediaID
 AND characters.characterID = :characterID_from_update_form;
 
+-- Query to get listing of weapons that haven't already been assigned to the character to display in Update form
+SELECT weapons.weaponID, weaponType FROM weapons
+INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID
+AND weaponType NOT IN
+(SELECT weaponType FROM weapons
+INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID
+WHERE character_weapons.characterID = :characterID_from_update_form)
+GROUP BY weaponType;
+
+-- Query to get listing of media that hasn't already been assigned to the character to display in Update form
+SELECT media.mediaID, title FROM media
+INNER JOIN character_media ON media.mediaID = character_media.mediaID
+AND title NOT IN
+(SELECT title FROM media
+INNER JOIN character_media ON media.mediaID = character_media.mediaID
+WHERE character_media.characterID = :characterID_from_update_form)
+GROUP BY title;
+
 -- Query to update a character's data based on submission of the Update Character form 
 UPDATE characters SET characterName = :name_input, actorName1 = :actor_name1_input, actorName2 = :actor_name2_input, characterRace = :raceID_from_dropdown_input, characterOrigin = :locationID_from_dropdown_input, weaponDetails = :textbox_input 
 WHERE characterID = :characterID_from_update_form;
