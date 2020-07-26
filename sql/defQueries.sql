@@ -59,7 +59,7 @@ CREATE TABLE `character_weapons` (
     `characterID` INT(11) NOT NULL DEFAULT '0',
     `weaponID` INT(11) NOT NULL DEFAULT '0',
     PRIMARY KEY (`characterID`, `weaponID`),
-    CONSTRAINT FOREIGN KEY (`characterID`) REFERENCES `characters` (`characterID`),
+    CONSTRAINT FOREIGN KEY (`characterID`) REFERENCES `characters` (`characterID`) ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (`weaponID`) REFERENCES `weapons` (`weaponID`)
 );
 
@@ -67,8 +67,8 @@ CREATE TABLE `character_media` (
     `characterID` INT(11) NOT NULL DEFAULT '0',
     `mediaID` INT(11) NOT NULL DEFAULT '0',
     PRIMARY KEY (`characterID`, `mediaID`),
-    CONSTRAINT FOREIGN KEY (`characterID`) REFERENCES `characters` (`characterID`),
-    CONSTRAINT FOREIGN KEY (`mediaID`) REFERENCES `media` (`mediaID`)
+    CONSTRAINT FOREIGN KEY (`characterID`) REFERENCES `characters` (`characterID`) ON DELETE CASCADE,
+    CONSTRAINT FOREIGN KEY (`mediaID`) REFERENCES `media` (`mediaID`) ON DELETE CASCADE
 );
 
 
