@@ -1,0 +1,48 @@
+<html>
+    <section class="pageHeader">
+        <p id="title">Lord of the Rings Wiki</p>
+    </section>
+    <section class="navBar">
+        <ul id="navMenu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/characters">Characters</a></li>
+            <li><a href="/locations" class="active">Locations</a></li>
+            <li><a href="/races">Races</a></li>
+            <li><a href="/weapons">Weapons</a></li>
+            <li><a href="/media">Media</a></li>
+        </ul> 
+    </section>
+    <section class="pageContent">
+        <div class="pageTitle">
+            <h2>Locations</h2>
+        </div>
+        <div id="locationTable">
+            <table>
+                <tbody>
+                    {{#each locations}}
+                    <tr>
+                        <td>{{locationName}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+        <h3>Add Location:</h3>
+        <div class="addEntry">
+            <fieldset>
+                <form id="add_locaton" action="/locations" method="post">
+                    <label>Location Name:
+                        <input type="text" name="locName" size="30" maxlength="100" required="required">
+                    </label>
+                    <br>
+                    <br>
+                    <input type="submit" value="Add Location" id="addLocation"/>
+                </form>
+            </fieldset>
+        </div>
+        <br><br>
+    </section>
+    <script src="js/header.js"></script>
+</html>
