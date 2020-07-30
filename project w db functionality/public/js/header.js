@@ -1,4 +1,3 @@
-var navContainer = document.getElementById("navMenu");
 var navItems = btnContainer.getElementsByClassName("btn");
 
 for (var i = 0; i < navItems.length; i++) {
