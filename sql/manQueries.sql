@@ -3,8 +3,8 @@
 -- Query to display all of the characters and their information
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID;
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID;
 
 -- Query for getting weapon types for characters
 SELECT characters.characterID, weapons.weaponType AS weaponName FROM characters
@@ -21,29 +21,29 @@ ORDER BY characterID;
 -- Query for sorting the characters table alphabetically by first name, A-Z
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
 ORDER BY characters.characterName ASC;
 
 -- Query for sorting the characters table alphabetically by first name, Z-A
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
 ORDER BY characters.characterName DESC;
 
 -- Query for sorting the characters table by race
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
 ORDER BY characterRace, characterName ASC;
 
 -- Query for sorting the characters table by location of origin
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
 ORDER BY characterOrigin, characterName ASC;
 
 -- Query to get all race IDs and Names to populate the Races dropdown for filtering
@@ -54,6 +54,28 @@ SELECT locationID, locationName FROM locations;
 
 -- Query to get all media IDs and titles to populate the Media dropdown for filtering
 SELECT mediaID, title FROM media;
+
+-- Query to filter characters by race
+SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
+FROM characters
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
+WHERE characters.characterRace = :raceID_from_dropdown_input;
+
+-- Query to filter characters by location of origin
+SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
+FROM characters
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
+WHERE characters.characterOrigin = :locationID_from_dropdown_input;
+
+-- Query to filter characters by appearance in a particular piece of media
+SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
+FROM characters
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
+INNER JOIN character_media ON characters.characterID = character_media.characterID
+WHERE character_media.mediaID = :mediaID_from_dropdown_input;
 
 -- Query to add a character to characters table
 INSERT INTO characters (characterName, actorName1, actorName2, characterRace, characterOrigin, weaponDetails)
