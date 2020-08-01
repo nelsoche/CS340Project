@@ -1,0 +1,182 @@
+<html>
+    <section class="pageHeader">
+        <p id="title">Lord of the Rings Wiki</p>
+    </section>
+    <section class="navBar">
+        <ul id="navMenu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/characters" class="active">Characters</a></li>
+            <li><a href="/locations">Locations</a></li>
+            <li><a href="/races">Races</a></li>
+            <li><a href="/weapons">Weapons</a></li>
+            <li><a href="/media">Media</a></li>
+        </ul> 
+    </section>
+    <section class="pageContent">
+        <div class="pageTitle">
+            <h2>Characters</h2>
+        </div>
+        <div id="filterSort">
+            <fieldset>
+                <form id="sort_characters" action="" method="">
+                    <label>Sort Characters by:<br>
+                        <select name="sortBy" id="sortBy">
+                            <option value="0">--</option>
+                            <option value="1">Character First Name A-Z</option>
+                            <option value="2">Character First Name Z-A</option>
+                            <option value="3">Race</option>
+                            <option value="4">Location of Origin</option>
+                        </select>
+                    </label>
+                    <input type="button" value="Sort" onclick="sortCharacters()"/>
+                </form>
+                <br>
+                <br>
+                <label>Filter Characters by:<br>
+                    <form id="filter_by_race" action="" method="">
+                        Race:
+                        <select name="raceFilter" id="raceFilter">
+                            {{#each races}}
+                                <option value='{{raceID}}'>{{raceName}}</option>
+                            {{/each}}
+                        </select>
+                        <input type="button" value="Filter" onclick="filterByRace()"/>
+                    </form>
+                    <br>
+                    <p>OR</p>
+                    <br>
+                    <form id="filter_by_location" action="" method="">
+                        Location of Origin:
+                        <select name="locFilter" id="locationFilter">
+                            {{#each locations}}
+                                <option value='{{locationID}}'>{{locationName}}</option>
+                            {{/each}}
+                        </select>
+                        <input type="button" value="Filter" onclick="filterByLocation()"/>
+                    </form>
+                    <br>
+                    <p>OR</p>
+                    <br>
+                    <form id="filter_by_media" action="" method="">
+                        Appears In:
+                        <select name="mediaFilter" id="mediaFilter">
+                            {{#each media}}
+                                <option value='{{mediaID}}'>{{mediaTitle}}</option>
+                            {{/each}}
+                        </select>
+                        <input type="button" value="Filter" onclick="filterByMedia()"/>
+                    </form>
+            </fieldset>
+        </div> 
+        <br>
+        <br>
+        <p><strong>Click on a character name to see additional information.</strong></p>
+        <br>
+        <div id="characterTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Character Name</th>
+                        <th colspan="2">Actor(s)</th>
+                        <th>Race</th>
+                        <th>Location of Origin</th>
+                        <th colspan="2">Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each characters}}
+                    <tr>
+                        <td>
+                            <button class="open" id="myBtn-{{characterID}}">{{characterName}}</button>
+                            <div id="myModal-{{characterID}}" class="modal">
+                                <div class="modal-content">
+                                    <span><strong><u>Additional Information</u></strong></span>
+                                    <span class="close" id="close-{{characterID}}">&times;</span>
+                                    <br><br>
+                                    <p><strong>Weapons Used:</strong></p>
+                                    <table class="modalTable">
+                                        {{#each ../weaponsUsed}}
+                                            {{#ifEquals charID ../characterID}}
+                                            <tr>
+                                                <td>{{weaponType}}</td>
+                                            </tr>
+                                            {{/ifEquals}}
+                                        {{/each}}
+                                    </table>
+                                    <br><br>
+                                    <p><strong>Weapon Details:</strong></p>
+                                    <p>{{weaponDetails}}</p>
+                                    <br><br>
+                                    <p><strong>Appears In:</strong></p>
+                                    <table class="modalTable">
+                                        {{#each ../charMedia}}
+                                            {{#ifEquals charID ../characterID}}
+                                            <tr>
+                                                <td>{{mediaTitle}}</td>
+                                            </tr>
+                                            {{/ifEquals}}
+                                        {{/each}}
+                                    </table>
+                                    <br><br>
+                                </div>
+                            </div> 
+                        </td>
+                        <td>{{actorName1}}</td>
+                        <td>{{actorName2}}</td>
+                        <td>{{characterRace}}</td>
+                        <td>{{characterOrigin}}</td>
+                        <td class="modButtons"><form action="/char_update/{{characterID}}"><input class="up" type="submit" value="Update"/></form></td>
+                        <td class="modButtons"><button onclick="deleteCharacter({{characterID}})">Delete</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+        <br><br>
+        <h3>Add Character:</h3>
+        <div class="addEntry">
+            <fieldset>
+                <form id="add_character" action="/characters" method="post">
+                    <span style="font-size:12px">* = Required field</span><br><br>
+                    <label>Character Name*:
+                        <input type="text" name="charName" id="charName" size="35" maxlength="100" required="required">
+                    </label>
+                    <br><br>
+                    <label>Actor Name:
+                        <input type="text" name="actorName1" id="actorName1" size="35" maxlength="100">
+                    </label>
+                    <br><br>
+                    <label>Additional Actor Name:
+                        <input type="text" name="actorName2" id="actorName2" size="35" maxlength="100">
+                    </label>
+                    <br><br>
+                    <label>Race:
+                        <select name="raceSelect" id="raceSelect">
+                            <option value="NULL">--</option>
+                            {{#each races}}
+                                <option value='{{raceID}}'>{{raceName}}</option>
+                            {{/each}}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label>Location of Origin:
+                        <select name="locationSelect" id="locationSelect">
+                            <option value="NULL">--</option>
+                            {{#each locations}}
+                                <option value='{{locationID}}'>{{locationName}}</option>
+                            {{/each}}
+                        </select>
+                    </label>
+                    <br><br>
+                    <input type="submit" value="Add Character" id="addCharacter"/>
+                </form>
+            </fieldset>
+        </div>
+        <br><br>
+    </section>
+    <script src="/js/characterMod.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/header.js"></script>
+    
+</html>

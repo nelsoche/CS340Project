@@ -1,0 +1,131 @@
+<html>
+    <section class="pageHeader">
+        <p id="title">Lord of the Rings Wiki</p>
+    </section>
+    <section class="navBar">
+        <ul id="navMenu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/characters" class="active">Characters</a></li>
+            <li><a href="/locations">Locations</a></li>
+            <li><a href="/races">Races</a></li>
+            <li><a href="/weapons">Weapons</a></li>
+            <li><a href="/media">Media</a></li>
+        </ul> 
+    </section>
+    <section class="pageContent">
+        <div class="pageTitle">
+            <h2>Update Character Information</h2>
+        </div>
+        <div class="updateForm">
+            <fieldset>
+                <form id="updateCharacter" action="/char_update/update" method="post">
+                    <input type="text" name="charID" value="{{character.[0].characterID}}" hidden>
+                    <label>Character Name:
+                        <input type="text" name="characterName" id="characterName" size="35" maxlength="100" required="required" value="{{character.[0].characterName}}">
+                    </label>
+                    <br><br>
+                    <label>Actor Name:
+                        <input type="text" name="actorName1" id="actorName1" size="35" maxlength="100" value="{{character.[0].actorName1}}">
+                    </label>
+                    <br><br>
+                    <label>Additional Actor Name:
+                        <input type="text" name="actorName2" id="actorName2" size="35" maxlength="100" value="{{character.[0].actorName2}}">
+                    </label>
+                    <br><br>
+                    <label>Race:
+                        <select name="charRace" id="charRace">
+                            <option value="NULL">--No Race--</option>
+                            {{#each races}}
+                                {{#ifEquals raceName ../character.[0].characterRace}}
+                                    <option value='{{raceID}}' selected>{{raceName}}</option>
+                                    {{else}}
+                                    <option value='{{raceID}}'>{{raceName}}</option>
+                                {{/ifEquals}}
+                            {{/each}}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label>Location of Origin:
+                        <select name="charOrigin" id="charOrigin">
+                            <option value="NULL">--No Location--</option>
+                            {{#each locations}}
+                                {{#ifEquals locationName ../character.[0].characterOrigin}}
+                                    <option value='{{locationID}}' selected>{{locationName}}</option>
+                                    {{else}}
+                                    <option value='{{locationID}}'>{{locationName}}</option>
+                                {{/ifEquals}}
+                            {{/each}}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label>Weapon details (e.g. name of sword):
+                        <input type="text" name="weaponInfo" id="weaponInfo" size="35" value="{{character.[0].weaponDetails}}">
+                    </label>
+                    <br><br>
+                    <input id="updateButton" type="submit" value="Update Character Data">
+                </form>
+                <br><br>
+                <h4>Weapons Used:</h4>
+                <table>
+                    <table class="updateTables">
+                        {{#each weaponsUsed}}
+                            {{#ifEquals charID ../character.[0].characterID}}
+                            <tr>
+                                <td>{{weaponName}}</td>
+                                <td><button onclick="deleteWeapon({{charID}},{{weaponID}})">Delete</button></td>
+                            </tr>
+                            {{/ifEquals}}
+                        {{/each}}
+                    </table>
+                </table>
+                <br><br>
+                <h4>Appears In:</h4>
+                <table>
+                    <table class="updateTables">
+                        {{#each charMedia}}
+                            {{#ifEquals charID ../character.[0].characterID}}
+                            <tr>
+                                <td>{{mediaTitle}}</td>
+                                <td><button onclick="deleteMedia({{charID}},{{mediaID}})">Delete</button></td>
+                            </tr>
+                            {{/ifEquals}}
+                        {{/each}}
+                    </table>
+                </table>
+                <br><br>
+                <h6>Use CTRL + Click to select multiple Weapons or Media</h6>
+                <br>
+                <form id="add_character_weapons" action="/char_update/add_weapons" method="post">
+                <label>Add Weapon(s):<br>
+                    <input type="text" name="charID" value="{{character.[0].characterID}}" hidden>
+                    <select multiple name="addWeapon" id="addWeapon" class="multiSelect">
+                        {{#each unusedWeapons}}
+                            <option value="{{weaponID}}">{{weaponType}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+                <br>
+                <input type="submit" value="Add Weapons" id="submit"/>
+                </form>
+                <br><br>
+                <form id="add_character_media" action="/char_update/add_media" method="post">
+                <label>Add Media Appearance(s):<br>
+                    <input type="text" name="charID" value="{{character.[0].characterID}}" hidden>
+                    <select multiple name="addMedia" id="addMedia" class="multiSelect">
+                        {{#each unusedMedia}}
+                            <option value="{{mediaID}}">{{mediaTitle}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+                <br>
+                <input type="submit" value="Add Media" id="submit"/>
+                </form>
+            </fieldset>
+            <br>
+            <button type="button"><a href="/characters" style="color:white">Return to List of Characters</a></button>
+            <br><br>
+        </div>
+    </section>
+    <script src="/js/updateButtons.js"></script>
+    <script src="/js/header.js"></script>
+</html>
