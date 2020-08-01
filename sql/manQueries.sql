@@ -87,9 +87,9 @@ DELETE FROM characters WHERE characterID = :characterID_from_delete_button;
 -- Query to get specific character's data to place in the Update Character form when user clicks 'Update'
 SELECT characters.characterID, characterName, actorName1, actorName2, races.raceName AS characterRace, locations.locationName AS characterOrigin, weaponDetails
 FROM characters
-INNER JOIN races ON characters.characterRace = races.raceID
-INNER JOIN locations ON characters.characterOrigin = locations.locationID
-AND characters.characterID = :characterID_from_update_form;
+LEFT JOIN races ON characters.characterRace = races.raceID
+LEFT JOIN locations ON characters.characterOrigin = locations.locationID
+WHERE characters.characterID = :characterID_from_update_form;
 
 -- Query to get specific character's weapon types to place in the Update Character form when user clicks 'Update'
 SELECT characters.characterID, weapons.weaponType AS weaponName FROM characters
