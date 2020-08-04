@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `character_media`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 /* table creation */
-
+-- Table to create the locations
 CREATE TABLE `locations` (
     `locationID` INT(11) NOT NULL AUTO_INCREMENT,
     `locationName` TEXT NOT NULL,
@@ -18,6 +18,7 @@ CREATE TABLE `locations` (
     UNIQUE KEY (`locationName`)
 );
 
+-- Table to create the race
 CREATE TABLE `races` (
     `raceID` INT(11) NOT NULL AUTO_INCREMENT,
     `raceName` TEXT NOT NULL,
@@ -25,6 +26,7 @@ CREATE TABLE `races` (
     UNIQUE KEY (`raceName`)
 );
 
+-- Table to create the weapons 
 CREATE TABLE `weapons` (
     `weaponID` INT(11) NOT NULL AUTO_INCREMENT,
     `weaponType` TEXT NOT NULL,
@@ -32,6 +34,7 @@ CREATE TABLE `weapons` (
     UNIQUE KEY (`weaponType`)
 );
 
+-- Table to create the media
 CREATE TABLE `media` (
     `mediaID` INT(11) NOT NULL AUTO_INCREMENT,
     `mediaType` TEXT NOT NULL,
@@ -41,6 +44,7 @@ CREATE TABLE `media` (
     PRIMARY KEY (`mediaID`)
 );
 
+-- Table to create the characters
 CREATE TABLE `characters` (
     `characterID` INT(11) NOT NULL AUTO_INCREMENT,
     `characterName` TEXT NOT NULL,
@@ -55,6 +59,7 @@ CREATE TABLE `characters` (
     CONSTRAINT FOREIGN KEY (`characterOrigin`) REFERENCES `locations` (`locationID`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+-- Table to create the character weapons information (if special one)
 CREATE TABLE `character_weapons` (
     `characterID` INT(11) NOT NULL DEFAULT '0',
     `weaponID` INT(11) NOT NULL DEFAULT '0',
@@ -63,6 +68,7 @@ CREATE TABLE `character_weapons` (
     CONSTRAINT FOREIGN KEY (`weaponID`) REFERENCES `weapons` (`weaponID`)
 );
 
+-- Table to create the character media information
 CREATE TABLE `character_media` (
     `characterID` INT(11) NOT NULL DEFAULT '0',
     `mediaID` INT(11) NOT NULL DEFAULT '0',
@@ -73,7 +79,7 @@ CREATE TABLE `character_media` (
 
 
 /* sample data insertion */
-
+-- Hard coded information for locattions, races, weapons, media, characters and specific character information
 INSERT INTO locations (locationName)
 VALUES ('Gondor'), ('Mordor'), ('Shire'), ('Mirkwood');
 

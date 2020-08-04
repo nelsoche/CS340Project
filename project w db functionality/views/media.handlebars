@@ -1,0 +1,159 @@
+<html>
+    <section class="pageHeader">
+        <p id="title">Lord of the Rings Wiki</p>
+    </section>
+
+    <section class="navBar">
+        <ul id="navMenu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/characters">Characters</a></li>
+            <li><a href="/locations">Locations</a></li>
+            <li><a href="/races">Races</a></li>
+            <li><a href="/weapons">Weapons</a></li>
+            <li><a href="/media" class="active">Media</a></li>
+        </ul> 
+    </section>
+
+    <section class="pageContent">
+        <div class="pageTitle">
+            <h2>Media</h2>
+        </div>
+
+        <div id="filterSort">
+            <fieldset>
+                <form id="sort_media" action="" method="">
+
+                    <label>Sort Media by:<br>
+                        <select name="sortBy" id="sortBy">
+                            <option value="0">--</option>
+                            <option value="1">Title A-Z</option>
+                            <option value="2">Title Z-A</option>
+                            <option value="3">Media Type</option>
+                        </select>
+                    </label>
+
+                    <input type="button" value="Sort" onclick="sortMedia()"/>
+                </form>
+                <br>
+
+                <br>
+                <label>Filter Media by Type:<br>
+                    <form id="filter_by_type" action="" method="">
+                        Media Type:
+                        <select name="mediaTypeFilter" id="Filter">
+                            {{#each media}}
+                                <option value='{{mediaID}}'>{{mediaType}}</option>
+                            {{/each}}
+                        </select>
+                        <input type="button" value="Filter" onclick="filterByMediaType()"/>
+                    </form>
+                    <br>
+            </fieldset>
+        </div> 
+        <br>
+
+        <br>
+        <h2>Click the title of a piece of media to see additional information :)</h2>
+        <br>
+
+        <div id="mediaTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Media Type</th>
+                        <th>Release Date</th>
+                        <th colspan="2">Modify</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each media}}
+                    <tr>
+                        <td>
+                            <button class="open" id="myBtn-{{mediaID}}">{{title}}</button>
+                            <div id="myModal-{{mediaID}}" class="modal">
+                                
+                                <div class="modal-content">
+                                    <span><strong><u>Additional Information</u></strong></span>
+
+                                    <span class="close" id="close-{{mediaID}}">&times;</span>
+                                    <br>
+                                    
+                                    <br>
+                                    <p><strong>Characters in this book/movie:</strong></p>
+                                    <table class="modalTable">
+                                        {{#each ../characters}}
+                                            {{#ifEquals charID ../characterID}}
+                                            <tr>
+                                                <td>{{characterName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{actorName1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{actorName2}}</td>
+                                            </tr>
+                                            {{/ifEquals}}
+                                        {{/each}}
+                                    </table>
+                                    <br>
+                                    
+                                    <br>
+                                </div>
+                            </div> 
+                        </td>
+                        <td>{{mediaType}}</td>
+                        <td>{{releaseDate}}</td>
+
+                        <td class="modButtons"><form action="/med_update/{{mediaID}}"><input class="up" type="submit" value="Update"/></form></td>
+                        <td class="modButtons"><button onclick="deleteMedia({{mediaID}})">Delete</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        
+        <br>
+        <h3>Add a Piece of Media:</h3>
+        <div class="addEntry">
+            <fieldset>
+                <form id="add_media" action="/media" method="post">
+                    <span style="font-size:12px">* = Required field</span>
+                    <br>
+                    
+                    <br>
+                    <label>Title*:
+                        <input type="text" name="title" id="title" size="35" maxlength="100" required="required">
+                    </label>
+                    <br>
+
+                    <br>
+                        <label>Media Type:
+                            <select name="mediaTypeSelect" id="mediaTypeSelect">
+                                <option value="NULL">--</option>
+                                {{#each mediaType}}
+                                    <option value='{{mediaID}}'>{{mediaType}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
+                    <br>
+                    
+                    <br>
+                    <label>Release Date:
+                        <input type="text" name="mediaType" id="mediaType" size="35" maxlength="100">
+                    </label>
+                    <br>
+                    
+                    <input type="submit" value="Add Media" id="addMedia"/>
+                </form>
+            </fieldset>
+        </div>
+        <br><br>
+    </section>
+
+    <script src="/js/mediaMod.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/header.js"></script> 
+</html>

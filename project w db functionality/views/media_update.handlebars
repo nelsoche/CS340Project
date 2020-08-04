@@ -1,0 +1,81 @@
+<html>
+    <section class="pageHeader">
+        <p id="title">Lord of the Rings Wiki</p>
+    </section>
+
+    <section class="navBar">
+        <ul id="navMenu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/characters">Characters</a></li>
+            <li><a href="/locations">Locations</a></li>
+            <li><a href="/races">Races</a></li>
+            <li><a href="/weapons">Weapons</a></li>
+            <li><a href="/media" class="active">Media</a></li>
+        </ul> 
+    </section>
+
+    <section class="pageContent">
+        <div class="pageTitle">
+            <h2>Update Media Information</h2>
+        </div>
+
+        <div class="updateForm">
+            <fieldset>
+                <form id="updateMedia" action="/media_update/update" method="post">
+                    <input type="text" name="medID" value="{{media.[0].mediaID}}" hidden>
+
+                    <label>Title:
+                        <input type="text" name="title" id="title" size="35" maxlength="100" required="required" value="{{media.[0].title}}">
+                    </label>
+                    <br>
+                    
+                    {{!-- If media type already exists great, if not, a new one can be added --}}
+                    <br>
+                    <label>Media Type:
+                        <select name="medType" id="medType">
+                            {{#each mediaType}}
+                                {{#ifEquals mediaType ../media.[0].mediaType}}
+                                    <option value='{{mediaID}}' selected>{{mediaType}}</option>
+                                    {{else}}
+                                    <option value='{{mediaID}}'>{{mediaType}}</option>
+                                {{/ifEquals}}
+                            {{/each}}
+                        </select>
+                    </label>
+                    <br>
+
+                    <br>
+                    <label>Release Date:
+                        <input type="text" name="releaseDate" id="releaseDate" size="35" maxlength="100" value="{{media.[0].releaseDate}}">
+                    </label>
+                    <br>
+                    
+                    <br>
+                {{!-- Have a form that allows character to be assigned to a media type (hidden from table) --}}
+                <form id="add_media_character" action="/media_update/add_character" method="post">
+
+                <label>Add Character Appearance(s) in form of media:<br>
+                    <input type="text" name="charID" value="{{character.[0].characterID}}" hidden>
+                    <select multiple name="addCharacter" id="addCharacter" class="multiSelect">
+                        {{#each unusedCharacters}}
+                            <option value="{{characterID}}">{{characterName}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+                <br>
+
+                <input type="submit" value="Add Character" id="submit"/>
+                </form>
+            </fieldset>
+            <br>
+
+            <button type="button"><a href="/media" style="color:white">Return to the list of Media</a></button>
+            <br>
+            
+            <br>
+        </div>
+    </section>
+    
+    <script src="/js/updateButtons.js"></script>
+    <script src="/js/header.js"></script>
+</html>
