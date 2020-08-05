@@ -18,9 +18,10 @@ app.set('mysql', mysql);
 app.use('/characters', require('./characters.js'));
 app.use('/char_update', require('./charUpdate.js'));
 app.use('/locations', require('./locations.js'));
-/*app.use('/races', require('./races.js'));
+app.use('/races', require('./races.js'));
 app.use('/weapons', require('./weapons.js'));
-app.use('/media', require('./media.js'));*/
+app.use('/media', require('./media.js'));
+app.use('/media_update', require('./mediaUpdate.js'));
 
 app.use(function(req, res){
 	res.status(404);
