@@ -6,7 +6,7 @@ module.exports = function(){
 
     // Get the table of weapons
     function getWeapons(res, mysql, context, complete){
-        mysql.pool.query("SELECT weaponsName FROM weapons ORDER BY weaponName ASC", function(error, results, fields){
+        mysql.pool.query("SELECT weaponType FROM weapons ORDER BY weaponType ASC", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -32,8 +32,8 @@ module.exports = function(){
     // Add a weapons to the database
     router.post('/', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO weapons (weaponName) VALUES (?)";
-        var inserts = [req.body.weapName];
+        var sql = "INSERT INTO weapons (weaponType) VALUES (?)";
+        var inserts = [req.body.weaponType];
 
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){

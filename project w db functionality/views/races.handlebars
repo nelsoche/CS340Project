@@ -18,12 +18,12 @@
         <div class="pageTitle">
             <h2>Races</h2>
         </div>
-        <div id="locationTable">
+        <div id="raceTable">
             <table>
                 <tbody>
                     {{#each races}}
                     <tr>
-                        <td>{{racesName}}</td>
+                        <td>{{raceName}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -37,7 +37,7 @@
             <fieldset>
                 <form id="add_race" action="/races" method="post">
                     <label>Race Name:
-                        <input type="text" name="race_Name" size="30" maxlength="100" required="required">
+                        <input type="text" name="raceName" size="30" maxlength="100" required="required">
                     </label>
                     <br>
                     <br>
