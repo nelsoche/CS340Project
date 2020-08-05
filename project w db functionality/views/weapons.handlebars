@@ -16,14 +16,14 @@
 
     <section class="pageContent">
         <div class="pageTitle">
-            <h2>Races</h2>
+            <h2>Weapons</h2>
         </div>
         <div id="weaponTable">
             <table>
                 <tbody>
                     {{#each weapons}}
                     <tr>
-                        <td>{{weaponsName}}</td>
+                        <td>{{weaponType}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -36,8 +36,8 @@
         <div class="addEntry">
             <fieldset>
                 <form id="add_weapon" action="/weapons" method="post">
-                    <label>Weapon Name:
-                        <input type="text" name="weapon_Name" size="30" maxlength="100" required="required">
+                    <label>Weapon Type:
+                        <input type="text" name="weaponType" size="30" maxlength="100" required="required">
                     </label>
                     <br>
                     <br>
