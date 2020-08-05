@@ -40,10 +40,10 @@
                 <label>Filter Media by Type:<br>
                     <form id="filter_by_type" action="" method="">
                         Media Type:
-                        <select name="mediaTypeFilter" id="Filter">
-                            {{#each media}}
-                                <option value='{{mediaID}}'>{{mediaType}}</option>
-                            {{/each}}
+                        <select name="mediaTypeFilter" id="mediaTypeFilter">
+                            <option value="Book">Book</option>
+                            <option value="Movie">Movie</option>
+                            <option value="Other">Other</option>
                         </select>
                         <input type="button" value="Filter" onclick="filterByMediaType()"/>
                     </form>
@@ -53,7 +53,7 @@
         <br>
 
         <br>
-        <h2>Click the title of a piece of media to see additional information :)</h2>
+        <p><strong>Click the title of a piece of media to see additional information.</strong></p>
         <br>
 
         <div id="mediaTable">
@@ -78,27 +78,20 @@
                                     <span><strong><u>Additional Information</u></strong></span>
 
                                     <span class="close" id="close-{{mediaID}}">&times;</span>
-                                    <br>
-                                    
-                                    <br>
+                                    <br><br>
+                                    <p><strong>Synopsis:</strong></p>
+                                    <p>{{synopsis}}</p>
+                                    <br><br>
                                     <p><strong>Characters in this book/movie:</strong></p>
                                     <table class="modalTable">
-                                        {{#each ../characters}}
-                                            {{#ifEquals charID ../characterID}}
+                                        {{#each ../mediaChars}}
+                                            {{#ifEquals mediaID ../mediaID}}
                                             <tr>
                                                 <td>{{characterName}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{actorName1}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{actorName2}}</td>
                                             </tr>
                                             {{/ifEquals}}
                                         {{/each}}
                                     </table>
-                                    <br>
-                                    
                                     <br>
                                 </div>
                             </div> 
@@ -106,7 +99,7 @@
                         <td>{{mediaType}}</td>
                         <td>{{releaseDate}}</td>
 
-                        <td class="modButtons"><form action="/med_update/{{mediaID}}"><input class="up" type="submit" value="Update"/></form></td>
+                        <td class="modButtons"><form action="/media_update/{{mediaID}}"><input class="up" type="submit" value="Update"/></form></td>
                         <td class="modButtons"><button onclick="deleteMedia({{mediaID}})">Delete</button></td>
                     </tr>
                     {{/each}}
@@ -125,27 +118,29 @@
                     
                     <br>
                     <label>Title*:
-                        <input type="text" name="title" id="title" size="35" maxlength="100" required="required">
+                        <input type="text" name="mediaTitle" id="mediaTitle" size="35" maxlength="100" required="required">
                     </label>
                     <br>
 
                     <br>
-                        <label>Media Type:
-                            <select name="mediaTypeSelect" id="mediaTypeSelect">
-                                <option value="NULL">--</option>
-                                {{#each mediaType}}
-                                    <option value='{{mediaID}}'>{{mediaType}}</option>
-                                {{/each}}
+                        <label>Media Type*:
+                            <select name="mediaType" id="mediaType" required="required">
+                                <option value="Book">Book</option>
+                                <option value="Movie">Movie</option>
+                                <option value="Other">Other</option>
                             </select>
                         </label>
                     <br>
                     
                     <br>
-                    <label>Release Date:
-                        <input type="text" name="mediaType" id="mediaType" size="35" maxlength="100">
+                    <label>Release Date*:
+                        <input type="date" name="releaseDate" id="releaseDate" required="required">
                     </label>
                     <br>
-                    
+                    <label>Synopsis:
+                        <textarea name="synopsis" id="synopsis" style="width: 250px; height: 150px;"></textarea>
+                    </label>
+                    <br>
                     <input type="submit" value="Add Media" id="addMedia"/>
                 </form>
             </fieldset>
