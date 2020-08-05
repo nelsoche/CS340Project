@@ -22,57 +22,48 @@
         <div class="updateForm">
             <fieldset>
                 <form id="updateMedia" action="/media_update/update" method="post">
-                    <input type="text" name="medID" value="{{media.[0].mediaID}}" hidden>
+                    <input type="text" name="mediaID" value="{{media.[0].mediaID}}" hidden>
 
                     <label>Title:
-                        <input type="text" name="title" id="title" size="35" maxlength="100" required="required" value="{{media.[0].title}}">
+                        <input type="text" name="mediaTitle" id="mediaTitle" size="35" maxlength="100" required="required" value="{{media.[0].title}}">
                     </label>
                     <br>
-                    
-                    {{!-- If media type already exists great, if not, a new one can be added --}}
                     <br>
                     <label>Media Type:
-                        <select name="medType" id="medType">
-                            {{#each mediaType}}
-                                {{#ifEquals mediaType ../media.[0].mediaType}}
-                                    <option value='{{mediaID}}' selected>{{mediaType}}</option>
-                                    {{else}}
-                                    <option value='{{mediaID}}'>{{mediaType}}</option>
-                                {{/ifEquals}}
-                            {{/each}}
+                        <select name="mediaType" id="mediaType" required="required">
+                            {{#ifEquals media.[0].mediaType "Book"}}
+                                <option value="Book" selected>Book</option>
+                                <option value="Movie">Movie</option>
+                                <option value="Other">Other</option>
+                            {{/ifEquals}}
+                            {{#ifEquals media.[0].mediaType "Movie"}}
+                                <option value="Book">Book</option>
+                                <option value="Movie" selected>Movie</option>
+                                <option value="Other">Other</option>
+                            {{/ifEquals}}
+                            {{#ifEquals media.[0].mediaType "Other"}}
+                                <option value="Book">Book</option>
+                                <option value="Movie">Movie</option>
+                                <option value="Other" selected>Other</option>
+                            {{/ifEquals}}
                         </select>
                     </label>
                     <br>
 
                     <br>
                     <label>Release Date:
-                        <input type="text" name="releaseDate" id="releaseDate" size="35" maxlength="100" value="{{media.[0].releaseDate}}">
+                        <input type="date" name="releaseDate" id="releaseDate" value="{{media.[0].releaseDate}}" required="required">
                     </label>
-                    <br>
-                    
-                    <br>
-                {{!-- Have a form that allows character to be assigned to a media type (hidden from table) --}}
-                <form id="add_media_character" action="/media_update/add_character" method="post">
-
-                <label>Add Character Appearance(s) in form of media:<br>
-                    <input type="text" name="charID" value="{{character.[0].characterID}}" hidden>
-                    <select multiple name="addCharacter" id="addCharacter" class="multiSelect">
-                        {{#each unusedCharacters}}
-                            <option value="{{characterID}}">{{characterName}}</option>
-                        {{/each}}
-                    </select>
-                </label>
-                <br>
-
-                <input type="submit" value="Add Character" id="submit"/>
-                </form>
+                    <br><br>
+                    <label>Synopsis:<br>
+                        <textarea name="synopsis" id="synopsis" style="width: 400px; height: 200px;">{{media.[0].synopsis}}</textarea>
+                    </label>
+                    <br><br>
+                    <input id="updateButton" type="submit" value="Update">
             </fieldset>
             <br>
-
             <button type="button"><a href="/media" style="color:white">Return to the list of Media</a></button>
-            <br>
-            
-            <br>
+            <br><br>
         </div>
     </section>
     
