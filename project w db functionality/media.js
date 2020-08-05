@@ -4,20 +4,7 @@ module.exports = function(){
 
     // Get the table of media
     function getMedia(res, mysql, context, complete){
-        mysql.pool.query("SELECT media.mediaID, title, mediaType, releaseDate FROM media", function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-
-            context.media = results;
-            complete();
-        });
-    }
-
-    // Get list of all characters (only id, name, and actors' names)
-    function getCharacters(res, mysql, context, complete){
-        mysql.pool.query("SELECT characterID, characterName, actorName1, actorName2 FROM characters", function(error, results, fields){
+        mysql.pool.query("SELECT media.mediaID, title, mediaType, DATE_FORMAT(releaseDate, '%M %e %Y') AS releaseDate, synopsis FROM media", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -30,17 +17,16 @@ module.exports = function(){
 
     // Sort media by: A-Z, Z-A, or Media Type
     function getSortedMedia(req, res, mysql, context, complete){
-        var query = "SELECT media.mediaID, title, mediaType, releaseDate FROM media";
+        var query = "SELECT media.mediaID, title, mediaType, DATE_FORMAT(releaseDate, '%M %e %Y') AS releaseDate, synopsis FROM media";
         console.log(req.params);
 
         if(req.params.sortBy == "1"){
-            query += "ORDER BY media.title ASC";
+            query += " ORDER BY title ASC";
         }else if(req.params.sortBy == "2"){
-            query += "ORDER BY media.title DESC";
+            query += " ORDER BY title DESC";
         }else if(req.params.sortBy == "3"){
-            query += "ORDER BY media.mediaType ASC";
+            query += " ORDER BY mediaType, title ASC";
         }
-
         mysql.pool.query(query, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
@@ -52,11 +38,10 @@ module.exports = function(){
     }
 
     // Filter media based on mediaType
-    function getMediabyType(req, res, mysql, context, complete){
-        var query = "SELECT media.mediaID, title, mediaType, releaseDate FROM media WHERE media.mediaType = ?";
+    function getMediaByType(req, res, mysql, context, complete){
+        var query = "SELECT media.mediaID, title, mediaType, DATE_FORMAT(releaseDate, '%M %e %Y') AS releaseDate, synopsis FROM media WHERE media.mediaType = ?";
         console.log(req.params);
         var inserts = [req.params.mediaType];
-        
         mysql.pool.query(query, inserts, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
@@ -68,14 +53,13 @@ module.exports = function(){
         });
     }
 
-    // Get characters for each peice of media
+    // Get characters for each piece of media
     function getMediaChar(res, mysql, context, complete){
-        mysql.pool.query("SELECT media.mediaID AS medID, characters.characterName FROM characters INNER JOIN characterName ON media.mediaID = media_characters.mediaID INNER JOIN characters ON characters.charactersID = media_characters.mediaID ORDER BY medID", function(error, results, fields){
+        mysql.pool.query("SELECT media.mediaID, characters.characterName FROM media INNER JOIN character_media ON media.mediaID = character_media.mediaID INNER JOIN characters ON character_media.characterID = characters.characterID ORDER BY mediaID", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-
             context.mediaChars = results;
             complete();
         });
@@ -87,18 +71,12 @@ module.exports = function(){
         var context = {};
         context.pageTitle = "Media";
         var mysql = req.app.get('mysql');
-
-        getCharacters(res, mysql, context, complete);
-        getCharWeapons(res, mysql, context, complete);
-        getCharMedia(res, mysql, context, complete);
-        getRaces(res, mysql, context, complete);
-        getLocations(res, mysql, context, complete);
         getMedia(res, mysql, context, complete);
-
+        getMediaChar(res, mysql, context, complete);
         function complete(){
             callbackCount++;
 
-            if(callbackCount >= 6){
+            if(callbackCount >= 2){
                 res.render('media', context);
             }
         }
@@ -110,13 +88,10 @@ module.exports = function(){
         var context = {};
         context.pageTitle = "Media";
         var mysql = req.app.get('mysql');
-
         getSortedMedia(req, res, mysql, context, complete);
-        getMediabyType(res, mysql, context, complete);
-
+        getMediaChar(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-
             if(callbackCount >= 2){
                 res.render('media', context);
             }
@@ -124,15 +99,13 @@ module.exports = function(){
     });
 
     // Filter by media type
-    router.get('/filter/media/:media', function(req, res){
+    router.get('/filter/:mediaType', function(req, res){
         var callbackCount = 0;
         var context = {};
         context.pageTitle = "Media";
         var mysql = req.app.get('mysql');
-
-        getMediabyType(req, res, mysql, context, complete);
+        getMediaByType(req, res, mysql, context, complete);
         getMediaChar(res, mysql, context, complete);
-
         function complete(){
             callbackCount++;
 
@@ -146,8 +119,11 @@ module.exports = function(){
     router.post('/', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "INSERT INTO media (mediaType, title, releaseDate, synopsis) VALUES (?, ?, ?, ?)";
-        var inserts = [req.body.medType, req.body.title, req.body.releaseDate];
-
+        var synopsis = req.body.synopsis;
+        if(synopsis == ""){
+            synopsis = null;
+        }
+        var inserts = [req.body.mediaType, req.body.mediaTitle, req.body.releaseDate, synopsis];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(JSON.stringify(error));
@@ -164,7 +140,6 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM media WHERE mediaID = ?";
         var inserts = [req.params.mediaID];
-        
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(error);
