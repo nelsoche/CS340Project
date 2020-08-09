@@ -105,18 +105,16 @@ AND characters.characterID = :characterID_from_update_form;
 
 -- Query to get listing of weapons that haven't already been assigned to the character to display in Update form
 SELECT weapons.weaponID, weaponType FROM weapons
-INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID
-AND weaponType NOT IN
-(SELECT weaponType FROM weapons
+WHERE weapons.weaponID NOT IN
+(SELECT weapons.weaponID FROM weapons
 INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID
 WHERE character_weapons.characterID = :characterID_from_update_form)
 GROUP BY weaponType;
 
 -- Query to get listing of media that hasn't already been assigned to the character to display in Update form
-SELECT media.mediaID, title FROM media
-INNER JOIN character_media ON media.mediaID = character_media.mediaID
-AND title NOT IN
-(SELECT title FROM media
+SELECT media.mediaID, title AS mediaTitle FROM media
+WHERE media.mediaID NOT IN
+(SELECT media.mediaID FROM media
 INNER JOIN character_media ON media.mediaID = character_media.mediaID
 WHERE character_media.characterID = :characterID_from_update_form)
 GROUP BY title;
