@@ -71,7 +71,7 @@ module.exports = function(){
 
     /* Get weapons not used by the character */
     function getAvailableWeapons(req, res, mysql, context, complete){
-        var query = "SELECT weapons.weaponID, weaponType FROM weapons INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID AND weaponType NOT IN (SELECT weaponType FROM weapons INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID WHERE character_weapons.characterID = ?) GROUP BY weaponType;";
+        var query = "SELECT weapons.weaponID, weaponType FROM weapons WHERE weapons.weaponID NOT IN (SELECT weapons.weaponID FROM weapons INNER JOIN character_weapons ON weapons.weaponID = character_weapons.weaponID WHERE character_weapons.characterID = ?) GROUP BY weaponType";
         var inserts = [req.params.characterID];
         mysql.pool.query(query, inserts, function(error, results, fields){
             if(error){
@@ -85,7 +85,7 @@ module.exports = function(){
 
     /* Get media appearances not assigned to the character */
     function getAvailableMedia(req, res, mysql, context, complete){
-        var query = "SELECT media.mediaID, title AS mediaTitle FROM media INNER JOIN character_media ON media.mediaID = character_media.mediaID AND title NOT IN (SELECT title FROM media INNER JOIN character_media ON media.mediaID = character_media.mediaID WHERE character_media.characterID = ?) GROUP BY title;";
+        var query = "SELECT media.mediaID, title AS mediaTitle FROM media WHERE media.mediaID  NOT IN (SELECT media.mediaID FROM media INNER JOIN character_media ON media.mediaID = character_media.mediaID WHERE character_media.characterID = ?) GROUP BY title";
         var inserts = [req.params.characterID];
         mysql.pool.query(query, inserts, function(error, results, fields){
             if(error){
